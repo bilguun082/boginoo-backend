@@ -38,3 +38,19 @@ exports.getUserLink = async (req, res) => {
     res.status(400).send(error.message);
   }
 };
+
+exports.getHistory = async (req, res) => {
+  const page = Number(req.params.page);
+  const limit = Number(req.params.limit);
+
+  try {
+    const posts = await Lists.find()
+      .limit(limit)
+      .skip(limit * (page - 1))
+      .exec();
+
+    res.status(200).json({ message: "success", posts });
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+};
