@@ -42,9 +42,10 @@ exports.getUserLink = async (req, res) => {
 exports.getHistory = async (req, res) => {
   const page = Number(req.params.page);
   const limit = Number(req.params.limit);
+  const email = req.params.email;
 
   try {
-    const posts = await Lists.find()
+    const posts = await Lists.find({ email: email })
       .limit(limit)
       .skip(limit * (page - 1))
       .exec();
